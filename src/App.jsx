@@ -9,14 +9,20 @@ import { useState } from 'react';
 
 
 function App() { 
-let foodItems =['dal','Green vegetable','Roti','Salad','Milk','Ghee'];
-let [textToShow ,setTextState] = useState("Food items entered by user");
+//let foodItems =['dal','Green vegetable','Roti','Salad','Milk','Ghee'];
+//let [textToShow ,setTextState] = useState();
+let [foodItems, setFoodItems]=useState([]);
 
-console.log(`Current value of textState:${textToShow}`);
+//console.log(`Current value of textState:${textToShow}`);
 
- const handleOnChange = (event)   =>    {
-  console.log(event.target.value)
-  setTextState(event.target.value);
+ const onKeyDown = (event)   =>    {
+  if (event.key === 'Enter'){
+    let newFoodItem = event.target.value;
+    event.target.value = "";
+    let newItems =[...foodItems, newFoodItem];
+    setFoodItems(newItems);
+   // console.log('Food value entered is ' +newFoodItem);
+  }
 };
 
   return ( 
@@ -24,9 +30,9 @@ console.log(`Current value of textState:${textToShow}`);
   <Container>
 
   <h1 className="kg-heading">Healthy Food</h1>
-   <ErrorMessage items={foodItems}></ErrorMessage>
- <FoodInput handleOnChange={handleOnChange}></FoodInput>
-  <p>{textToShow}</p>
+ <FoodInput handleKeyDown={onKeyDown }></FoodInput>
+ <ErrorMessage items={foodItems}></ErrorMessage>
+  {/* <p>{textToShow}</p> */}
  <FoodItems items={foodItems}></FoodItems>
 
 </Container>
